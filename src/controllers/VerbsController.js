@@ -27,7 +27,7 @@ export const GetItem = async (id) => {
 };
 
 export const SaveItem = async (item) => {
-  const query = ` INSERT INTO Carteiras (Section, Verb, Past, Translate) 
+  const query = ` INSERT INTO Verbs (Section, Verb, Past, Translate) 
                   VALUES ('${item.Section}', '${item.Verb}', '${item.Past}', '${item.Translate}')`;
   try {
     await pool.connect();

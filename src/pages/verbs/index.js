@@ -49,7 +49,7 @@ const Verbs = () => {
 
   return (
     <>
-      <HeaderPage title="Verbos" pageType="index" textBt="Adicionar" iconBt="fas fa-plus" accessKey="c" lenght={lista.length} />
+      <HeaderPage title={toFirstLetterUpperCase(urlRoot)} pageType="index" textBt="Adicionar" iconBt="fas fa-plus" accessKey="c" lenght={lista.length} />
       <Row>
         <Col className="m-0">
           <input type="text" className="form-control" placeholder="Pesquisar" value={termo} onChange={e => setTermo(e.target.value)} />

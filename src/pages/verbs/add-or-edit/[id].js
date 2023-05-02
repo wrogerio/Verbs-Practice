@@ -5,17 +5,16 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 // components
 import HeaderPage from '@/components/HeaderPage';
 import { nDateIso, toFirstLetterUpperCase, nDateIsoPlusOneDay } from "@/helper/util";
-import { SaveItem, GetItem } from "@/services/EnviosService";
-import { GetList } from "@/services/InstituicoesService";
+import { SaveItem, GetItem } from "@/services/VerbsService";
+import { GetList } from "@/services/VerbsService";
 
 
 const Index = () => {
-  const urlRoot = "envios";
+  const urlRoot = "verbs";
   const router = useRouter();
   const [validated, setValidated] = useState(false);
   const btSubmit = useRef();
-  const [item, setItem] = useState({ InstituicaoId: '', DtEnvio: nDateIso(new Date()), Valor: '', TipoEnvio: 'PIX' });
-  const [instituicoes, setInstituicoes] = useState([]);
+  const [item, setItem] = useState({ Section: '', Verb: '', Past: '', Translate: '' });
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -24,8 +23,7 @@ const Index = () => {
     if (form.checkValidity() !== false) {
       btSubmit.current.style.display = "none";
       SaveItem({
-        ...item,
-        DtEnvio: nDateIsoPlusOneDay(item.DtEnvio),
+        ...item
       }).then((result) => {
         if (result) router.push(`/${urlRoot}`);
         else console.log("Erro ao salvar");
@@ -34,76 +32,66 @@ const Index = () => {
     setValidated(true);
   };
 
-  const getInstituicoes = async () => {
-    GetList().then(data => {
-      setInstituicoes(data);
-    })
-  }
-
   useEffect(() => {
     const id = window.location.pathname.split("/").pop()
-    getInstituicoes().then(() => {
-      if (id !== "0") {
-        GetItem(id.toLowerCase()).then(item => {
-          setItem({ Id: item.Id, InstituicaoId: item.InstituicaoId, DtEnvio: nDateIso(item.DtEnvio), TipoEnvio: item.TipoEnvio, Valor: item.Valor });
-        })
-      }
-    });
+    if (id !== "0") {
+      GetItem(id.toLowerCase()).then(item => {
+        setItem({ Id: item.Id, Section: item.Section, Verb: item.Verb, Past: item.Past, Translate: item.Translate, });
+      })
+    }
   }, [])
 
   return (
     <>
       <HeaderPage title={toFirstLetterUpperCase(urlRoot)} pageType="cadastrar" accessKey="v" textBt="Voltar" iconBt="fas fa-plus-circle me-2"></HeaderPage>
+      <pre>
+        {JSON.stringify(item, null, 2)}
+      </pre>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <fieldset>
           <Row>
-            <Col xs={12} lg={6} >
-              <Form.Group className="mb-3" controlId="InstituicaoId">
-                <Form.Label>Instituicao</Form.Label>
-                <Form.Select autoFocus required name="InstituicaoId" value={item.InstituicaoId} onChange={e => setItem({ ...item, InstituicaoId: e.target.value })}>
-                  <option value="">Selecione</option>
-                  {instituicoes.map((item, index) => (
-                    <option key={index} value={item.Id}>{item.Nome}</option>
-                  ))}
-                </Form.Select>
+            <Col xs={12} lg={3} >
+              <Form.Group className="mb-3" controlId="section">
+                <Form.Label>Section</Form.Label>
+                <Form.Control type="number" autoFocus required name="section" value={item.Section} onChange={e => setItem({ ...item, Section: e.target.value })}>
+                </Form.Control>
                 <Form.Control.Feedback type="invalid" className="bg-danger text-white p-2 rounded">
-                  Selecione a instituição
+                  set the field section
                 </Form.Control.Feedback>
-                <Form.Control.Feedback className="bg-success text-white p-2 rounded">Perfeito!</Form.Control.Feedback>
+                <Form.Control.Feedback className="bg-success text-white p-2 rounded">Perfect!</Form.Control.Feedback>
               </Form.Group>
             </Col>
-            <Col xs={12} lg={2} >
+            <Col xs={12} lg={3} >
               <Form.Group className="mb-3" controlId="TipoEnvio">
-                <Form.Label>Tipo</Form.Label>
-                <Form.Select required name="TipoEnvio" value={item.TipoEnvio} onChange={e => setItem({ ...item, TipoEnvio: e.target.value })}>
-                  <option value="">Selecione</option>
-                  <option value="PIX">PIX</option>
-                  <option value="TED">TED</option>
-                </Form.Select>
+                <Form.Label>Verb</Form.Label>
+                <Form.Control type="text" required name="Verb" value={item.Verb} onChange={e => setItem({ ...item, Verb: e.target.value })}>
+                </Form.Control>
                 <Form.Control.Feedback type="invalid" className="bg-danger text-white p-2 rounded">
-                  Selecione a instituição
+                  set the field VERB
                 </Form.Control.Feedback>
-                <Form.Control.Feedback className="bg-success text-white p-2 rounded">Perfeito!</Form.Control.Feedback>
+                <Form.Control.Feedback className="bg-success text-white p-2 rounded">Perfect!</Form.Control.Feedback>
               </Form.Group>
             </Col>
-            <Col xs={12} lg={2} >
-              <Form.Group className="mb-3" controlId="DtEnvio">
-                <Form.Label>Data de Envio</Form.Label>
-                <Form.Control type="date" required name="DtEnvio" value={item.DtEnvio} onChange={e => setItem({ ...item, DtEnvio: e.target.value })} />
+            <Col xs={12} lg={3} >
+              <Form.Group className="mb-3" controlId="TipoEnvio">
+                <Form.Label>Past</Form.Label>
+                <Form.Control type="text" required name="Past" value={item.Past} onChange={e => setItem({ ...item, Past: e.target.value })}>
+                </Form.Control>
                 <Form.Control.Feedback type="invalid" className="bg-danger text-white p-2 rounded">
-                  Informe a data de envio
+                  set the field PAST
                 </Form.Control.Feedback>
-                <Form.Control.Feedback className="bg-success text-white p-2 rounded">Perfeito!</Form.Control.Feedback>
+                <Form.Control.Feedback className="bg-success text-white p-2 rounded">Perfect!</Form.Control.Feedback>
               </Form.Group>
             </Col>
-            <Col xs={12} lg={2} >
-              <Form.Group className="mb-3" controlId="Valor">
-                <Form.Label>Valor R$</Form.Label>
-                <Form.Control type="number" step={0.01} required name="Valor" value={item.Valor} onChange={e => setItem({ ...item, Valor: e.target.value })} />
+            <Col xs={12} lg={3} >
+              <Form.Group className="mb-3" controlId="TipoEnvio">
+                <Form.Label>Translate</Form.Label>
+                <Form.Control type="text" required name="Translate" value={item.Translate} onChange={e => setItem({ ...item, Translate: e.target.value })}>
+                </Form.Control>
                 <Form.Control.Feedback type="invalid" className="bg-danger text-white p-2 rounded">
-                  Forneça um valor
+                  set the field TRANSLATE
                 </Form.Control.Feedback>
-                <Form.Control.Feedback className="bg-success text-white p-2 rounded">Perfeito!</Form.Control.Feedback>
+                <Form.Control.Feedback className="bg-success text-white p-2 rounded">Perfect!</Form.Control.Feedback>
               </Form.Group>
             </Col>
           </Row>
