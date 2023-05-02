@@ -49,17 +49,17 @@ const Verbs = () => {
 
   return (
     <>
-      <HeaderPage title="Verbos" pageType="index" textBt="Adicionar" iconBt="fas fa-plus" accessKey="c" lenght={66} />
+      <HeaderPage title="Verbos" pageType="index" textBt="Adicionar" iconBt="fas fa-plus" accessKey="c" lenght={lista.length} />
       <Row>
         <Col className="m-0">
           <input type="text" className="form-control" placeholder="Pesquisar" value={termo} onChange={e => setTermo(e.target.value)} />
           <Table bordered hover>
             <thead>
               <tr>
-                <th>Instituicao</th>
-                <th className="d-none d-md-table-cell">Tipo</th>
-                <th className="d-none d-sm-table-cell">Data</th>
-                <th style={{ width: 115 }}>Valor</th>
+                <th style={{ width: 120 }}>Seção</th>
+                <th className="d-none d-md-table-cell">Verb</th>
+                <th className="d-none d-sm-table-cell">Past</th>
+                <th>Translate</th>
                 <th>#</th>
               </tr>
             </thead>

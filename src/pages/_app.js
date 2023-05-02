@@ -9,11 +9,11 @@ export default function App({ Component, pageProps }) {
   return (
     <Container>
       <Head>
-        <title>W Invest</title>
+        <title>Verbs Practice</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Navbar />
       <div className="container">
+        <Navbar />
         <Component {...pageProps} />
       </div>
     </Container>
