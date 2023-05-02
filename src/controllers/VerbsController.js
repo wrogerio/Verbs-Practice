@@ -1,8 +1,9 @@
 import pool from "../database/db";
 
 export const GetAll = async () => {
-  const query = ` SELECT  *
-                  FROM    Verbs`;
+  const query = ` SELECT  Id, Section, Verb, Past, Translate
+                  FROM    Verbs
+                  ORDER   BY Section, Verb`;
   try {
     await pool.connect();
     const result = await pool.request().query(query);
@@ -13,8 +14,8 @@ export const GetAll = async () => {
 };
 
 export const GetItem = async (id) => {
-  const query = ` SELECT  Id, FundoId, Sigla, DtLancamento, DtLancamentoDt, Ano, Mes, Dia, MesNome, Tipo, Qtd, Valor, Total 
-                  FROM    vCarteiras
+  const query = ` SELECT  Id, Section, Verb, Past, Translate
+                  FROM    Verbs
                   WHERE   Id = '${id}'`;
   try {
     await pool.connect();
@@ -25,20 +26,9 @@ export const GetItem = async (id) => {
   }
 };
 
-export const ConfereQtdSigla = async (ano, mes, sigla) => {
-  const query = ` SELECT Sigla, Qtd, Valor, Total FROM fnCarteirasConferencia(${ano},${mes}, '${sigla}')`;
-  try {
-    await pool.connect();
-    const result = await pool.request().query(query);
-    return result.recordset.length > 0 ? result.recordset[0] : {};
-  } catch (error) {
-    return { error: error.message };
-  }
-};
-
 export const SaveItem = async (item) => {
-  const query = ` INSERT INTO Carteiras (FundoId, DtLancamento, Tipo, Qtd, Valor) 
-                  VALUES ('${item.FundoId}', '${item.DtLancamento}', '${item.Tipo}', '${item.Qtd}', '${item.Valor}')`;
+  const query = ` INSERT INTO Carteiras (Section, Verb, Past, Translate) 
+                  VALUES ('${item.Section}', '${item.Verb}', '${item.Past}', '${item.Translate}')`;
   try {
     await pool.connect();
     await pool.request().query(query);
@@ -49,13 +39,12 @@ export const SaveItem = async (item) => {
 }
 
 export const UpdateItem = async (item) => {
-  const query = ` UPDATE Carteiras SET 
-                  FundoId = '${item.FundoId}',
-                  DtLancamento = '${item.DtLancamento}',
-                  Tipo = '${item.Tipo}',
-                  Qtd = '${item.Qtd}',
-                  Valor = '${item.Valor}'
-                  WHERE Id = '${item.Id}'`;
+  const query = ` UPDATE  Verbs SET
+                  Section = '${item.Section}',
+                  Verb = '${item.Verb}',
+                  Past = '${item.Past}',
+                  Translate = '${item.Translate}'
+                  WHERE   Id = '${item.Id}'`;
   try {
     await pool.connect();
     await pool.request().query(query);
@@ -66,7 +55,7 @@ export const UpdateItem = async (item) => {
 }
 
 export const RemoveItem = async (id) => {
-  const query = ` DELETE FROM Carteiras WHERE Id = '${id}'`;
+  const query = ` DELETE FROM Verbs WHERE Id = '${id}'`;
 
   try {
     await pool.connect();

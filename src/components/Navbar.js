@@ -28,7 +28,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className={currentRoute == "/instituicoes" ? "nav-link active" : "nav-link"} href="/instituicoes" onClick={() => toggleMenu()}>
+              <Link className={currentRoute == "/verbs" ? "nav-link active" : "nav-link"} href="/verbs" onClick={() => toggleMenu()}>
                 <i className="fas fa-book me-1"></i>
                 Verbs
               </Link>
