@@ -1,8 +1,8 @@
-import { formatCurrency, numberWith2Caracters } from "@/helper/util";
+import { numberWith2Caracters } from "@/helper/util";
 import Link from "next/link";
 
 const HeaderPage = (props) => {
-  const { title, pageType, textBt, iconBt, accessKey, lenght, total } = props;
+  const { title, pageType, textBt, iconBt, accessKey, lenght } = props;
   let buttomClass = "";
   let buttomText = "";
   let titleFormat = "";
@@ -42,14 +42,6 @@ const HeaderPage = (props) => {
       <div className="col">
         <div className="headerPageBg py-2 px-3">
           <div className="d-flex justify-content-between align-items-center">
-            {
-              lenght && lenght != undefined ? <h4 className={titleFormat}>{title} - {numberWith2Caracters(lenght)}</h4> : <h4 className={titleFormat}>{title}</h4>
-            }
-
-            {
-              total && total != undefined ? <h4 className={totalFormat}>{formatCurrency(total)}</h4> : ""
-            }
-
             <Link href={linkToGo} className={buttomClass} accessKey={accessKey}>
               <i className={iconBt}></i>
               {textBt}
@@ -57,7 +49,7 @@ const HeaderPage = (props) => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

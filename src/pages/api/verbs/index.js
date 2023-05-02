@@ -6,6 +6,7 @@ export default async (req, res) => {
   switch (method) {
     case "GET":
       const resultGetAll = await GetAll();
+      console.log(resultGetAll);
       res.status(200).json(resultGetAll);
       break;
     case "POST":

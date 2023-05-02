@@ -2,10 +2,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Col, Row, Table } from 'react-bootstrap';
 // components
-import { HeaderPage } from '@/components/HeaderPage';
+import HeaderPage from '@/components/HeaderPage';
+import { toFirstLetterUpperCase, handleSearch } from "@/helper/util";
 // services
 import { GetList, RemoveItem } from '../../services/VerbsService';
-import { toFirstLetterUpperCase } from "@/helper/util";
 
 const Verbs = () => {
   const urlRoot = "verbs";
@@ -49,7 +49,7 @@ const Verbs = () => {
 
   return (
     <>
-      <HeaderPage title={toFirstLetterUpperCase(urlRoot)} lenght={listaTotal} total={total} pageType="index" accessKey="c" textBt="Cadastrar" iconBt="fas fa-plus-circle me-2"></HeaderPage>
+      <HeaderPage title="Verbos" pageType="index" textBt="Adicionar" iconBt="fas fa-plus" accessKey="c" lenght={66} />
       <Row>
         <Col className="m-0">
           <input type="text" className="form-control" placeholder="Pesquisar" value={termo} onChange={e => setTermo(e.target.value)} />
