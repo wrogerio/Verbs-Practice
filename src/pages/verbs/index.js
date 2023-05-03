@@ -56,10 +56,10 @@ const Verbs = () => {
           <Table bordered hover>
             <thead>
               <tr>
-                <th style={{ width: 120 }}>Seção</th>
-                <th className="d-none d-md-table-cell">Verb</th>
+                <th className="d-none d-md-table-cell" style={{ width: 120 }}>Seção</th>
+                <th >Verb</th>
                 <th className="d-none d-sm-table-cell">Past</th>
-                <th>Translate</th>
+                <th className="d-none d-sm-table-cell">Translate</th>
                 <th>#</th>
               </tr>
             </thead>
@@ -67,8 +67,8 @@ const Verbs = () => {
               {
                 Array.isArray(lista) && lista.map((item, index) => (
                   <tr data-search={`${item.Section}-${item.Verb}-${item.Past}-${item.Translate}`} key={index}>
-                    <td>{item.Section}</td>
-                    <td className="d-none d-md-table-cell">{item.Verb}</td>
+                    <td className="d-none d-md-table-cell">{item.Section}</td>
+                    <td className="">{item.Verb}</td>
                     <td className="d-none d-md-table-cell">{item.Past}</td>
                     <td className="d-none d-md-table-cell">{item.Translate}</td>
                     <td className="text-center">

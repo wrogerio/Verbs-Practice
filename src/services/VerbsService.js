@@ -4,6 +4,18 @@ export const GetList = async () => {
   return data;
 };
 
+export const GetListMemorize = async (Section) => {
+  const response = await fetch(`/api/memorize`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Section': Section
+    }
+  });
+  const data = await response.json();
+  return data;
+};
+
 export const RemoveItem = async (id) => {
   const response = await fetch(`/api/verbs/add-or-edit/${id}`, {
     method: 'DELETE',

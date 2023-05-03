@@ -34,7 +34,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className={currentRoute == "/fundos" ? "nav-link active" : "nav-link"} href="/fundos" onClick={() => toggleMenu()}>
+              <Link className={currentRoute == "/memory" ? "nav-link active" : "nav-link"} href="/memory" onClick={() => toggleMenu()}>
                 <i className="fas fa-head-side-brain me-1"></i>
                 Memory
               </Link>
